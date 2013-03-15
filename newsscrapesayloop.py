@@ -52,6 +52,11 @@ def readLatestHeadlines(symbolHeadlines):
 
   return (symbolHeadlines, newHeadlines)
 
+def marketStatus():
+  soup = BeautifulSoup(urllib2.urlopen('http://asx.com.au/asx/widget/marketStatus.do').read())
+  return (soup.find(id='status').span.get_text())
+  
+
 def main():
   if len(sys.argv) < 2:
     print("Usage: python newsscrape.py ncm bhp rio")
@@ -66,7 +71,8 @@ def main():
   os.system('say Greetings commander.  The latest market news for the following companies: ' + spellOutWords(sys.argv[1:]) + ', is as follows:')
 
   while True:
-    os.system('say Scanning for news') 
+    #os.system('say Scanning for news') 
+    os.system('say ASX is currently ' + marketStatus())
     symbolHeadlines, newHeadlines = readLatestHeadlines(symbolHeadlines)
     for headline in newHeadlines:
       os.system('say ' + headline)
