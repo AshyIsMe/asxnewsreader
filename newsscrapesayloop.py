@@ -6,6 +6,17 @@ from bs4 import BeautifulSoup
 import csv
 import os
 import time
+import platform
+
+
+speakCommand = ''
+
+if platform.system() == "Darwin":
+  speakCommand = "say "
+elif platform.system() == "Windows":
+  speakCommand = 'C:\\Progra~1\\eSpeak\\command_line\\espeak.exe '
+elif platform.system() == "Linux":
+  speakCommand = 'espeak '
 
 def priceSensitive(imgTag):
   if imgTag is None:
@@ -67,15 +78,18 @@ def main():
   for symbol in sys.argv[1:]:
     symbolHeadlines[symbol] = list()
   
-  print('say Greetings commander.  The latest market news for the following companies: ' +  spellOutWords(sys.argv[1:]) + ', is as follows:')
-  os.system('say Greetings commander.  The latest market news for the following companies: ' + spellOutWords(sys.argv[1:]) + ', is as follows:')
+  #print('say Greetings commander.  The latest market news for the following companies: ' +  spellOutWords(sys.argv[1:]) + ', is as follows:')
+  #os.system('say Greetings commander.  The latest market news for the following companies: ' + spellOutWords(sys.argv[1:]) + ', is as follows:')
+  print(speakCommand + '" Greetings commander.  The latest market news for the following companies: ' +  spellOutWords(sys.argv[1:]) + ', is as follows:"')
+  os.system(speakCommand + '" Greetings commander.  The latest market news for the following companies: ' + spellOutWords(sys.argv[1:]) + ', is as follows:"')
 
   while True:
     #os.system('say Scanning for news') 
-    os.system('say ASX is ' + marketStatus())
+    os.system(speakCommand + '" ASX is ' + marketStatus() + '"')
     symbolHeadlines, newHeadlines = readLatestHeadlines(symbolHeadlines)
     for headline in newHeadlines:
-      os.system('say ' + headline)
+      #os.system('say ' + headline)
+      os.system(speakCommand + '" ' + headline + '"')
     time.sleep(60 * 10)
 
 
