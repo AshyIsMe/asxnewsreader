@@ -72,7 +72,7 @@ def main():
 
   while True:
     #os.system('say Scanning for news') 
-    os.system('say ASX is currently ' + marketStatus())
+    os.system('say ASX is ' + marketStatus())
     symbolHeadlines, newHeadlines = readLatestHeadlines(symbolHeadlines)
     for headline in newHeadlines:
       os.system('say ' + headline)
